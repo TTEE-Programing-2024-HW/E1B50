@@ -2,8 +2,8 @@
 #include<stdlib.h>
 int main(void)
 {
-	/*1. 螢幕上出現個人風格的畫面(至少20行)，並要求使用者輸入4個數字的密碼(密碼值預設為2024)。
-	若輸入正確，則進入步驟2。若連續錯三次，則顯示警告訊息並結束程式。請在畫面上顯示密碼值以便檢查。*/ 
+	/*1. 在螢幕上出現個人風格的畫面(至少20行)，並要求使用者輸入4個數字的密碼(預設為2024)。
+	若輸入正確，則出現歡迎訊息，並進入步驟2。若連續錯三次，則顯示警告訊息並結束程式。*/ 
 	puts("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");  /*印出帶有個人風格的畫面*/ 
 	puts("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
 	
@@ -50,4 +50,19 @@ int main(void)
 	}
 	system("pause");
 	system("CLS");
+	
+	while(1){
+		puts("----E----1----B----50----");
+		puts("-----[BookingSystem]-----");
+		puts("|  a. Available seats   |");
+		puts("|  b. Arrange for you   |");
+		puts("|  c. Choose by yourself|");
+		puts("|  d. Exit              |");
+		puts("--G--U--A--N--C--H--E--N ");
+		fflush(stdin);
+	    system("pause");
 	} 
+	return 0;
+	} 
+	
+	
