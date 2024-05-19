@@ -1,5 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
+#define ROWS 9
+#define COLS 9 
+
 int main(void)
 {
 	/*1. 在螢幕上出現個人風格的畫面(至少20行)，並要求使用者輸入4個數字的密碼(預設為2024)。
@@ -51,7 +54,6 @@ int main(void)
 	system("pause");
 	system("CLS");
 	
-	while(1){
 		puts("----E----1----B----50----");
 		puts("-----[BookingSystem]-----");
 		puts("|  a. Available seats   |");
@@ -61,7 +63,17 @@ int main(void)
 		puts("--G--U--A--N--C--H--E--N ");
 		fflush(stdin);
 	    system("pause");
-	} 
+		
+		void Seats(char seats[ROWS][COLS]){
+			int i,j,k;
+			for(i=0;i<ROWS;i++){
+				for(j=0;j<COLS;j++){
+					seats[i][j]='0';
+				}
+			}
+			
+		}
+		 
 	return 0;
 	} 
 	
