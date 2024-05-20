@@ -1,6 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<time.h> 
+#include<time.h>
+ #include <ctype.h>
+#include <string.h>
 #define ROWS 9
 #define COLS 9 
 
@@ -49,7 +51,7 @@ void displayHeader()
 		 }
 	 }
 	 
-	 void Seating(char seating[ROWS][COLS])
+	 void printSeating(char seating[ROWS][COLS])
 	 {
 	 	printf("123456789\n");
 	 	int i,j;
@@ -62,14 +64,14 @@ void displayHeader()
 		 }
 	 }
 	 
-	 int suggestSeating (char seating[ROWS][COLS],int numSeats)
+	 int suggestSeating (char seating[ROWS][COLS],int s)
 	 {
 	 	int i,j,h;
 	 	for(i=0;i<ROWS;i++)
 	 	{
-	 		for (j = 0; j <= COLS - numSeats; ++j) {
+	 		for (j = 0; j <= COLS - s; ++j) {
 	 			int available = 1;
-	 			for(h=0;h<numSeats;h++)
+	 			for(h=0;h<s;h++)
 	 			{
 	 				if(seating[i][j+h]!='-')
 	 				{
@@ -79,7 +81,7 @@ void displayHeader()
 				 }
 			if(available)	 
 			{
-				for(h=0;h<numSeats;h++)
+				for(h=0;h<s;h++)
 				{
 				  seating[i][j+h]='@';	
 				}
@@ -87,10 +89,9 @@ void displayHeader()
 			}
 		 }
 	 }
-	   return 0;
-	 }
+
 	 
-	 if(numSeats==4)
+	 if(s==4)
 	 {
 	 	for(i=0;i<ROWS-1;i++)
 		 {
@@ -137,7 +138,7 @@ void manualReservation(char seating[ROWS][COLS])
         printSeating(seating);
     }
     
-    printf("Are you satisfied?(y/n):");
+    printf("Are you satisfied(你滿意嗎)?(y/n):");
     char character;
     scanf("%c",&character);
     if(character=='n')
@@ -163,7 +164,7 @@ void manualReservation(char seating[ROWS][COLS])
 			{
 		if(seating[i][j]=='@')
 				{
-				seating='*';
+				seating[i][j]='*';
 				}
 			}
 		}
@@ -194,7 +195,6 @@ int main(void)
 {
 	displayHeader();
 	system("pause");
-	system("CLS");
 	int password,i;
 	for(i=0;i<=3;i++)
 	{
@@ -208,27 +208,26 @@ int main(void)
 		else
 		{
 			printf("錯誤,請重新輸入\n");
+		}
 			if(i==2){
 				printf("錯誤過多,結束程式\n");
 				return 0;
 			}
-		}
 	}
-}
 	char seating[ROWS][COLS];
-	int i,j;
-	for(i=0;i<ROWS;i++)
+	int g,j;
+	for(g=0;g<ROWS;g++)
 	{
 		for(j=0;j<COLS;j++)
 		{
-			seating[i][j]='-';
+			seating[g][j]='-';
 		}
 	}
 	generateRandomReservations(seating);
 	
 	while(1)
 	{
-		puts("----E----1----B----50----");
+		printf("----E----1----B----50----");
 		puts("-----[BookingSystem]-----");
 		puts("|  a. Available seats   |");
 		puts("|  b. Arrange for you   |");
@@ -236,7 +235,6 @@ int main(void)
 		puts("|  d. Exit              |");
 		puts("--G--U--A--N--C--H--E--N ");
 		fflush(stdin);
-	    system("pause");
 	    char choose;
 	    scanf("%c",&choose);
 	    
@@ -254,10 +252,10 @@ int main(void)
 			case'b':
 				{
 				 system("cls");
-                int numSeats;
+                int s;
                 printf("How many seats do you need? (1-4): ");
-                scanf("%d", &numSeats);
-                if (numSeats < 1 || numSeats > 4) {
+                scanf("%d", &s);
+                if (s < 1 || s > 4) {
                     printf("Invalid number of seats. Try again.\n");
                     break;
                 }
@@ -267,9 +265,9 @@ int main(void)
                         tempSeating[i][j] = seating[i][j];
                     }
                 }
-                if (suggestSeats(tempSeating, numSeats)) {
+                if (suggestSeating(tempSeating, s)) {
                     printSeating(tempSeating);
-                    printf("Are you satisfied with the suggestion? (y/n): ");
+                    printf("Are you satisfied ? (y/n): ");
                     char satisfaction;
                     scanf(" %c", &satisfaction);
                     if (satisfaction == 'y') {
@@ -308,5 +306,5 @@ int main(void)
 		}
 	}	 
 	return 0; 
-	
+}
 	
