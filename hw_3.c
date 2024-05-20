@@ -1,13 +1,11 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h> 
-#define ROWS 10
-#define COLS 10 
+#define ROWS 9
+#define COLS 9 
 
-int main(void)
+void displayHeader() 
 {
-	/*1. 在螢幕上出現個人風格的畫面(至少20行)，並要求使用者輸入4個數字的密碼(預設為2024)。
-	若輸入正確，則出現歡迎訊息，並進入步驟2。若連續錯三次，則顯示警告訊息並結束程式。*/ 
 	puts("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");  /*印出帶有個人風格的畫面*/ 
 	puts("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
 	
@@ -32,9 +30,9 @@ int main(void)
 	puts("NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN");
 	system("PAUSE");  /*暫停畫面 等使用者按任意鍵*/ 
 	system("CLS");  /*清除螢幕*/ 
+}
 	 
-	 
-	 void RandomSeating(char seating[ROWS][COLS])
+	 void generateRandomReservations(char seating[ROWS][COLS])
 	 {
 	 	srand(time(0));
 	 	int count=10;
@@ -51,7 +49,7 @@ int main(void)
 		 }
 	 }
 	 
-	 void Seating(char seating[ROS]W[COLS])
+	 void Seating(char seating[ROWS][COLS])
 	 {
 	 	printf("123456789\n");
 	 	int i,j;
@@ -64,18 +62,18 @@ int main(void)
 		 }
 	 }
 	 
-	 int suggestSeating (char seating[ROS]W[COLS],int numSeats)
+	 int suggestSeating (char seating[ROWS][COLS],int numSeats)
 	 {
 	 	int i,j,h;
 	 	for(i=0;i<ROWS;i++)
 	 	{
 	 		for (j = 0; j <= COLS - numSeats; ++j) {
-	 			bool available = true;
+	 			int available = 1;
 	 			for(h=0;h<numSeats;h++)
 	 			{
 	 				if(seating[i][j+h]!='-')
 	 				{
-	 					available = false;
+	 					available = 0;
 	 					break;
 					 }
 				 }
@@ -92,7 +90,111 @@ int main(void)
 	   return 0;
 	 }
 	 
-	 
+	 if(numSeats==4)
+	 {
+	 	for(i=0;i<ROWS-1;i++)
+		 {
+		 	for(j=0;j<COLS-1;j++)
+		 	{
+		 		if(seating[i][j]=='-'&&seating[i][j+1]=='-'&&seating[i+1][j]&&seating[i+1][j+1]=='-')
+		 		{
+		 		seating[i][j]='@';
+				seating[i][j+1]='@';
+				seating[i+1][j]='@';
+				seating[i+1][j+1]='@';
+				return 1;
+				 }
+			 }
+		 }
+	 }
+	 return 0;
+}
+
+void manualReservation(char seating[ROWS][COLS]) 
+    {
+    char input[10];
+    while (1) 
+	{
+        printf(" 輸入座位 (1-2) 或「完成」到結束：");
+        scanf("%s", input);
+        
+        if (strcmp(input, "完成") == 0) 
+		break;
+        if (strlen(input) != 3 || input[1] != '-' || !isdigit(input[0]) || !isdigit(input[2]))
+		 {
+            printf("輸入格式無效。 再試一次\n");
+            continue;
+        }
+        int row = input[0] - '1';
+        int col = input[2] - '1';
+        
+        if (row < 0 || row >= ROWS || col < 0 || col >= COLS || seating[row][col] != '-')
+		 {
+            printf("輸入格式無效。 再試一次。\n");
+            continue;
+        }
+        seating[row][col] = '@';
+        printSeating(seating);
+    }
+    
+    printf("Are you satisfied?(y/n):");
+    char character;
+    scanf("%c",&character);
+    if(character=='n')
+    {
+    	int i,j;
+    	for(i=0;i<ROWS;i++)
+    	{
+    	for(j=0;j<COLS;j++)
+    		{
+    	if(seating[i][j]=='@')
+    			{
+    			seating[i][j]='-';
+				}
+			}
+		}
+	}
+	else
+	{
+		int i,j;
+		for(i=0;i<ROWS;i++)
+		{
+    	for(j=0;j<COLS;j++)
+			{
+		if(seating[i][j]=='@')
+				{
+				seating='*';
+				}
+			}
+		}
+	}
+}
+
+void handleoptionD()
+ {
+    while (1) 
+	{
+        printf("Continue? (y/n): ");
+        char choose;
+        scanf(" %c", &choose);
+        if (choose == 'y') 
+		{
+            return;
+        } if (choose == 'n')
+	    {
+            exit(0);
+        } else 
+		{
+            printf("Invalid input. Please enter 'y' or 'n'.\n");
+        }
+    }
+}
+
+int main(void)
+{
+	displayHeader();
+	system("pause");
+	system("CLS");
 	int password,i;
 	for(i=0;i<=3;i++)
 	{
@@ -112,18 +214,20 @@ int main(void)
 			}
 		}
 	}
-	system("pause");
-	system("CLS");
-	
-	void Seats(char seats[ROWS][COLS]){
-			int i,j,k;
-			for(i=0;i<ROWS;i++){
-				for(j=0;j<COLS;j++){
-					seats[i][j]='0';
-				}
-			}
-			
+}
+	char seating[ROWS][COLS];
+	int i,j;
+	for(i=0;i<ROWS;i++)
+	{
+		for(j=0;j<COLS;j++)
+		{
+			seating[i][j]='-';
 		}
+	}
+	generateRandomReservations(seating);
+	
+	while(1)
+	{
 		puts("----E----1----B----50----");
 		puts("-----[BookingSystem]-----");
 		puts("|  a. Available seats   |");
@@ -133,10 +237,76 @@ int main(void)
 		puts("--G--U--A--N--C--H--E--N ");
 		fflush(stdin);
 	    system("pause");
-		
-		
-		 
-	return 0;
-	} 
+	    char choose;
+	    scanf("%c",&choose);
+	    
+	    switch(choose)
+	    {
+	    	case'a':
+	    		{
+	    		system("cls");
+                printSeating(seating);
+                printf("Press any key to return to menu...");
+                getchar(); getchar();
+                system("cls");
+                break;
+			}
+			case'b':
+				{
+				 system("cls");
+                int numSeats;
+                printf("How many seats do you need? (1-4): ");
+                scanf("%d", &numSeats);
+                if (numSeats < 1 || numSeats > 4) {
+                    printf("Invalid number of seats. Try again.\n");
+                    break;
+                }
+                char tempSeating[ROWS][COLS];
+                for (i = 0; i < ROWS; ++i) {
+                    for (j = 0; j < COLS; ++j) {
+                        tempSeating[i][j] = seating[i][j];
+                    }
+                }
+                if (suggestSeats(tempSeating, numSeats)) {
+                    printSeating(tempSeating);
+                    printf("Are you satisfied with the suggestion? (y/n): ");
+                    char satisfaction;
+                    scanf(" %c", &satisfaction);
+                    if (satisfaction == 'y') {
+                        for (i = 0; i < ROWS; ++i) {
+                            for (j = 0; j < COLS; ++j) {
+                                if (tempSeating[i][j] == '@') {
+                                    seating[i][j] = '*';
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    printf("No available seats found for your request.\n");
+                }
+                system("cls");
+                break;	
+					}	
+				case'c':
+				{
+				system("cls");
+                manualReservation(seating);
+                system("cls");
+                break;	
+					}
+				case'd':
+				{
+			    system("cls");
+                handleoptionD();
+                system("cls");
+                break;
+                
+                default:
+                	 printf("Invalid option. Try again.\n");
+					}	
+				
+		}
+	}	 
+	return 0; 
 	
 	
