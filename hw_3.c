@@ -1,7 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
-#define ROWS 9
-#define COLS 9 
+#include<time.h> 
+#define ROWS 10
+#define COLS 10 
 
 int main(void)
 {
@@ -32,6 +33,66 @@ int main(void)
 	system("PAUSE");  /*暫停畫面 等使用者按任意鍵*/ 
 	system("CLS");  /*清除螢幕*/ 
 	 
+	 
+	 void RandomSeating(char seating[ROWS][COLS])
+	 {
+	 	srand(time(0));
+	 	int count=10;
+	 	while(count>0)
+	 	{
+	 	int row = rand() % ROWS;
+        int col = rand() % COLS;
+        
+        if(seating[ROWS][COLS]=='-')
+		{
+			seating[ROWS][COLS]=='*';
+			count--;
+		}
+		 }
+	 }
+	 
+	 void Seating(char seating[ROS]W[COLS])
+	 {
+	 	printf("123456789\n");
+	 	int i,j;
+	 	for(i=0;i<ROWS;i++){
+	 		printf("%d",i+1);
+	 		for(j=0;j<COLS;j++){
+	 			printf("%d",seating[i][j]);
+			 }
+			 printf("\n");
+		 }
+	 }
+	 
+	 int suggestSeating (char seating[ROS]W[COLS],int numSeats)
+	 {
+	 	int i,j,h;
+	 	for(i=0;i<ROWS;i++)
+	 	{
+	 		for (j = 0; j <= COLS - numSeats; ++j) {
+	 			bool available = true;
+	 			for(h=0;h<numSeats;h++)
+	 			{
+	 				if(seating[i][j+h]!='-')
+	 				{
+	 					available = false;
+	 					break;
+					 }
+				 }
+			if(available)	 
+			{
+				for(h=0;h<numSeats;h++)
+				{
+				  seating[i][j+h]='@';	
+				}
+				return 1;
+			}
+		 }
+	 }
+	   return 0;
+	 }
+	 
+	 
 	int password,i;
 	for(i=0;i<=3;i++)
 	{
@@ -54,6 +115,15 @@ int main(void)
 	system("pause");
 	system("CLS");
 	
+	void Seats(char seats[ROWS][COLS]){
+			int i,j,k;
+			for(i=0;i<ROWS;i++){
+				for(j=0;j<COLS;j++){
+					seats[i][j]='0';
+				}
+			}
+			
+		}
 		puts("----E----1----B----50----");
 		puts("-----[BookingSystem]-----");
 		puts("|  a. Available seats   |");
@@ -64,15 +134,7 @@ int main(void)
 		fflush(stdin);
 	    system("pause");
 		
-		void Seats(char seats[ROWS][COLS]){
-			int i,j,k;
-			for(i=0;i<ROWS;i++){
-				for(j=0;j<COLS;j++){
-					seats[i][j]='0';
-				}
-			}
-			
-		}
+		
 		 
 	return 0;
 	} 
