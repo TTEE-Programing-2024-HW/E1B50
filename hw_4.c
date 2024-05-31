@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct {
     char name[50];
@@ -19,13 +20,13 @@ void clearScreen() {
 }
 
 void displayMenu() {
-    printf("------------[Grade System]----------\n");
+    printf("------E1B----[Grade System]-------50---\n");
     printf("|  a. Enter student grades       |\n");
     printf("|  b. Display student grades     |\n");
     printf("|  c. Search for student grades  |\n");
     printf("|  d. Grade ranking              |\n");
     printf("|  e. Exit system                |\n");
-    printf("------------------------------------\n");
+    printf("--------黃-----------冠----------宸-------\n");
 }
 
 void displayStudents(Student students[], int n) {
@@ -35,6 +36,32 @@ void displayStudents(Student students[], int n) {
         printf("姓名：%s, 學號：%d, 數學成績：%d, 物理成績：%d, 英文成績：%d, 平均成績：%.1f\n",
                students[i].name, students[i].id, students[i].math, students[i].physics, students[i].english, average);
     }
+}
+
+void searchStudent(Student students[], int n) {
+    char searchName[50];
+    int found = 0;
+    
+    printf("請輸入要搜尋的學生姓名：");
+    scanf("%s", searchName);
+    
+    for (int i = 0; i < n; i++) {
+        if (strcmp(students[i].name,searchName) == 0) {
+        float average = (students[i].math + students[i].physics + students[i].english) / 3.0;
+        printf("姓名：%s, 學號：%d, 數學成績：%d, 物理成績：%d, 英文成績：%d, 平均成績：%.1f\n",
+               students[i].name, students[i].id, students[i].math, students[i].physics, students[i].english, average);
+            found = 1;
+            break;
+    }
+}
+
+    if (!found) {
+        printf("資料不存在。\n");
+    }
+
+    printf("按任意鍵回到主選單...");
+    getchar();
+    getchar(); 
 }
 
 void displayWelcomeScreen() {
@@ -152,7 +179,19 @@ int main() {
                 clearScreen();
                 break;
 
-
+            case 'c':
+			    clearScreen();
+			    if (n > 0) {
+                    searchStudent(students,n);
+                } else {
+                printf("沒有學生資料可搜尋。\n");
+                printf("按任意鍵回到主選單...");
+                getchar(); 
+                getchar();
+                }
+                clearScreen();
+                break;
+				 
              default:
                 printf("無效的選項，請重新輸入。\n");
                 break;
