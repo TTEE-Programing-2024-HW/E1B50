@@ -8,6 +8,7 @@ typedef struct {
     int math;
     int physics;
     int english;
+    float average;
 } Student;
 
 void clearScreen() {
@@ -46,7 +47,8 @@ void searchStudent(Student students[], int n) {
     scanf("%s", searchName);
     
     for (int i = 0; i < n; i++) {
-        if (strcmp(students[i].name,searchName) == 0) {
+        if (strcmp(students[i].name,searchName) == 0) 
+		{
         float average = (students[i].math + students[i].physics + students[i].english) / 3.0;
         printf("姓名：%s, 學號：%d, 數學成績：%d, 物理成績：%d, 英文成績：%d, 平均成績：%.1f\n",
                students[i].name, students[i].id, students[i].math, students[i].physics, students[i].english, average);
@@ -61,6 +63,29 @@ void searchStudent(Student students[], int n) {
 
     printf("按任意鍵回到主選單...");
     getchar();
+    getchar(); 
+}
+
+void rankStudents(Student students[], int n) {
+	
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (students[j].average < students[j + 1].average) {
+                Student temp = students[j];
+                students[j] = students[j + 1];
+                students[j + 1] = temp;
+            }
+        }
+    }
+
+    printf("學生排名如下：\n");
+    for (int i = 0; i < n; i++) {
+        printf("姓名：%s, 學號：%d, 平均成績：%.1f\n",
+               students[i].name, students[i].id, students[i].average);
+    }
+
+    printf("按任意鍵回到主選單...");
+    getchar(); 
     getchar(); 
 }
 
@@ -125,12 +150,14 @@ int main() {
             case 'a':
                 clearScreen();
                 printf("請輸入學生數量（5~10位）：");
-                while (scanf("%d", &n) != 1 || n <5 || n >10) {
+                while (scanf("%d", &n) != 1 || n <5 || n >10)
+				 {
                 printf("輸入錯誤，請輸入一個介於 5 到 10 之間的整數：");
                 while (getchar() != '\n'); 
                 }
 
-                for (int i = 0; i < n; i++) {
+                for (int i = 0; i < n; i++) 
+				{
                     printf("輸入第 %d 個學生的資料：\n", i + 1);
 
                     printf("姓名：");
@@ -168,7 +195,8 @@ int main() {
 
             case 'b':
                 clearScreen();
-                if (n > 0) {
+                if (n > 0)
+				 {
                     displayStudents(students, n);
                 } else {
                     printf("沒有學生資料可顯示。\n");
@@ -181,7 +209,8 @@ int main() {
 
             case 'c':
 			    clearScreen();
-			    if (n > 0) {
+			    if (n > 0) 
+				{
                     searchStudent(students,n);
                 } else {
                 printf("沒有學生資料可搜尋。\n");
@@ -191,7 +220,21 @@ int main() {
                 }
                 clearScreen();
                 break;
-				 
+                
+		    case 'd':
+		    	clearScreen();
+                if (n > 0)
+				 {
+                    rankStudents(students, n);
+                } else {
+                printf("沒有學生資料可排名。\n");
+                printf("按任意鍵回到主選單...");
+                getchar();
+                getchar();
+                }
+                clearScreen();
+                break;
+                
              default:
                 printf("無效的選項，請重新輸入。\n");
                 break;
